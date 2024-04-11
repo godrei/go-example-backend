@@ -11,6 +11,9 @@ workflows:
     steps:
     - activate-ssh-key@4: { }
     - git-clone@8: {}
+    - script:
+        inputs:
+        - content: go version
 
   test:
     container:
@@ -30,6 +33,9 @@ workflows:
     envs:
     - REDIS_URL: redis://redis:6379/0
     steps:
+    - script:
+        inputs:
+        - content: go version
     - script:
         title: Run tests
         inputs:
