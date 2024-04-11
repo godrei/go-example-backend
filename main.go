@@ -3,15 +3,16 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/go-redis/redis/v8"
 	"log"
+
+	"github.com/go-redis/redis/v8"
 )
 
 func main() {
 	fmt.Println("Go Redis Tutorial")
 	client := createClient()
 
-	pong, err := client.Ping(context.Background()).Result()
+	pong, err := pingDatabase(client)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -36,6 +37,10 @@ func createClient() *redis.Client {
 		Password: "",
 		DB:       0,
 	})
+}
+
+func pingDatabase(client *redis.Client) (string, error) {
+	return client.Ping(context.Background()).Result()
 }
 
 func writeName(client *redis.Client, name string) error {

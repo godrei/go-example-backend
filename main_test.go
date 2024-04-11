@@ -1,9 +1,17 @@
 package main
 
 import (
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
+
+func TestPing(t *testing.T) {
+	client := createClient()
+	gotPong, err := pingDatabase(client)
+	require.NoError(t, err)
+	require.Equal(t, "PONG", gotPong)
+}
 
 func TestStoreName(t *testing.T) {
 	wantName := "Elliot"
