@@ -1,0 +1,36 @@
+format_version: "11"
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+
+meta:
+  bitrise.io:
+    machine_type_id: standard
+    stack: linux-docker-android-20.04
+
+workflows:
+  _clone:
+    steps:
+    - activate-ssh-key@4: { }
+    - git-clone@8: {}
+
+  test:
+    container:
+      image: golang:1.22
+    before_run:
+    - _clone
+    services:
+      redis:
+        image: redis:latest
+        ports:
+        - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    envs:
+    - REDIS_URL: redis://redis:6379/0
+    steps:
+    - script:
+        title: Run tests
+        inputs:
+        - content: go test ./...
