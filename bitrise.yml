@@ -16,10 +16,10 @@ workflows:
         - content: go version
 
   test:
-    container:
-      image: golang:1.22
     before_run:
     - _clone
+    container:
+      image: golang:1.22
     services:
       redis:
         image: redis:latest
@@ -31,7 +31,7 @@ workflows:
           --health-timeout 5s
           --health-retries 5
     envs:
-    - REDIS_URL: redis://redis:6379/0
+    - REDIS_DSN: redis://redis:6379/0
     steps:
     - script:
         inputs:

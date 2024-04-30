@@ -7,8 +7,8 @@ import (
 )
 
 func TestPing(t *testing.T) {
-	client := createClient()
-	gotPong, err := pingDatabase(client)
+	client := createDBClient()
+	gotPong, err := pingDB(client)
 	require.NoError(t, err)
 	require.Equal(t, "PONG", gotPong)
 }
@@ -16,11 +16,11 @@ func TestPing(t *testing.T) {
 func TestStoreName(t *testing.T) {
 	wantName := "Elliot"
 
-	client := createClient()
-	err := writeName(client, wantName)
+	client := createDBClient()
+	err := writeNameToDB(client, wantName)
 	require.NoError(t, err)
 
-	gotName, err := readName(client)
+	gotName, err := readNameFromDB(client)
 	require.NoError(t, err)
 	require.Equal(t, wantName, gotName)
 }

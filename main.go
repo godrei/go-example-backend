@@ -4,26 +4,27 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/go-redis/redis/v8"
 )
 
 func main() {
 	fmt.Println("Go Redis Tutorial")
-	client := createClient()
+	client := createDBClient()
 
-	pong, err := pingDatabase(client)
+	pong, err := pingDB(client)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(pong)
 
-	err = writeName(client, "Elliot")
+	err = writeNameToDB(client, "Elliot")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	val, err := readName(client)
+	val, err := readNameFromDB(client)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -31,22 +32,30 @@ func main() {
 	fmt.Println(val)
 }
 
-func createClient() *redis.Client {
+func createDBClient() *redis.Client {
 	return redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
+		Addr:     dbAddress(),
 		Password: "",
 		DB:       0,
 	})
 }
 
-func pingDatabase(client *redis.Client) (string, error) {
+func pingDB(client *redis.Client) (string, error) {
 	return client.Ping(context.Background()).Result()
 }
 
-func writeName(client *redis.Client, name string) error {
+func writeNameToDB(client *redis.Client, name string) error {
 	return client.Set(context.Background(), "name", name, 0).Err()
 }
 
-func readName(client *redis.Client) (string, error) {
+func readNameFromDB(client *redis.Client) (string, error) {
 	return client.Get(context.Background(), "name").Result()
+}
+
+func dbAddress() string {
+	addr := os.Getenv("REDIS_DSN")
+	if addr != "" {
+		return addr
+	}
+	return "localhost:6379"
 }
