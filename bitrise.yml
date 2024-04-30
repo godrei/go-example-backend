@@ -31,7 +31,7 @@ workflows:
           --health-timeout 5s
           --health-retries 5
     envs:
-    - REDIS_DSN: redis://redis:6379/0
+    - REDIS_DSN: redis://redis:6379
     steps:
     - script:
         inputs:
