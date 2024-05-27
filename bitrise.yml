@@ -43,6 +43,9 @@ workflows:
         steps:
         - script:
             inputs:
+            - content: docker ps -a
+        - script:
+            inputs:
             - content: go version
         - script:
             title: Run tests
