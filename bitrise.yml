@@ -1,11 +1,6 @@
 format_version: "11"
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 
-# meta:
-#   bitrise.io:
-#     machine_type_id: standard
-#     stack: linux-docker-android-20.04
-
 containers:
   golang:
     image: golang:1.22
@@ -21,14 +16,6 @@ services:
       --health-retries 5
 
 workflows:
-  # _clone:
-  #   steps:
-  #   - activate-ssh-key@4: { }
-  #   - git-clone@8: {}
-  #   - script:
-  #       inputs:
-  #       - content: go version
-
   test:
     envs:
     - REDIS_DSN: redis:6379
@@ -41,9 +28,6 @@ workflows:
         services:
         - redis
         steps:
-        - script:
-            inputs:
-            - content: docker ps -a
         - script:
             inputs:
             - content: go version
