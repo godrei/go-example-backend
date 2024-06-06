@@ -35,3 +35,6 @@ workflows:
             title: Run tests
             inputs:
             - content: go test ./...
+    - script:
+        inputs:
+        - content: docker ps -a
