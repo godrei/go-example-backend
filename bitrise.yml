@@ -6,6 +6,7 @@ meta:
     stack: linux-docker-android-20.04
 trigger_map:
 - type: pull_request
+  pull_request_comment: test
 workflows:
   _clone:
     steps:
