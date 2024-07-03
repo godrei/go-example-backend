@@ -4,6 +4,8 @@ meta:
   bitrise.io:
     machine_type_id: standard
     stack: linux-docker-android-20.04
+trigger_map:
+- type: pull_request
 workflows:
   _clone:
     steps:
