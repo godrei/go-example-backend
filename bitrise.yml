@@ -7,6 +7,9 @@ meta:
 trigger_map:
 - type: pull_request
   pull_request_comment: test
+  workflow: test
+- type: pull_request
+  workflow: test
 workflows:
   _clone:
     steps:
