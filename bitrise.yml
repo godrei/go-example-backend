@@ -1,9 +1,10 @@
-format_version: "11"
+format_version: "15"
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 
 containers:
   golang:
     image: golang:1.22
+
 services:
   redis:
     image: redis:latest
