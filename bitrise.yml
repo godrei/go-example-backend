@@ -16,14 +16,19 @@ services:
       --health-timeout 5s
       --health-retries 5
 
+step_bundles:
+  print_go_version:
+    steps:
+    - script:
+        inputs:
+        - content: go version
+
 workflows:
   test:
     envs:
     - REDIS_DSN: redis:6379
     steps:
-    - script:
-        inputs:
-        - content: go version
+    - bundle::print_go_version: {}
     - with:
         container: golang
         services:
