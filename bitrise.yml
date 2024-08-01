@@ -21,7 +21,9 @@ workflows:
         - content: echo "Hello main bitrise.yml"
     - script@1:
         inputs:
-        - content: go install github.com/bitrise-io/bitrise@2.19.0
+        - content: |-
+            rm -rf $(which bitrise)
+            go install github.com/bitrise-io/bitrise@2.19.0
     - script@1:
         inputs:
         - content: |-
