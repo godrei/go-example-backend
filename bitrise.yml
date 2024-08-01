@@ -27,3 +27,8 @@ workflows:
         - workflow_id: print_hello
         - bitrise_config_path: ./bitrise.yml
 
+meta:
+  bitrise.io:
+    stack: osx-xcode-15.1.x
+    machine_type_id: g2-m1.4core
+
