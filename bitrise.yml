@@ -24,7 +24,9 @@ workflows:
         - content: go install github.com/bitrise-io/bitrise@2.19.0
     - script@1:
         inputs:
-        - content: bitrise version
+        - content: |-
+            bitrise version
+            echo $PATH
     - bitrise-run:
         inputs:
         - workflow_id: print_hello
