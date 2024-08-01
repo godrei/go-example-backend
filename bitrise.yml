@@ -33,6 +33,9 @@ workflows:
         inputs:
         - workflow_id: print_hello
         - bitrise_config_path: ./bitrise.yml
+    - script:
+        inputs:
+        - content: echo "Hello main bitrise.yml"
 
 meta:
   bitrise.io:
