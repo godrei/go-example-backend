@@ -22,6 +22,9 @@ workflows:
     - script@1:
         inputs:
         - content: go install github.com/bitrise-io/bitrise@2.19.0
+    - script@1:
+        inputs:
+        - content: bitrise version
     - bitrise-run:
         inputs:
         - workflow_id: print_hello
