@@ -1,41 +1,44 @@
 format_version: "15"
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 
-containers:
-  golang:
-    image: golang:1.22
+include:
+- path: containers.yml
+- path: workflows.yml
 
-services:
-  redis:
-    image: redis:latest
-    ports:
-    - 6379:6379
-    options: >-
-      --health-cmd "redis-cli ping"
-      --health-interval 10s
-      --health-timeout 5s
-      --health-retries 5
+trigger_map:
+- type: pull_request
+  workflow: print_hello_main
 
 workflows:
-  test:
-    envs:
-    - REDIS_DSN: redis:6379
+  print_hello_main:
+    before_run:
+    - print_hello
     steps:
+    - activate-ssh-key: {}
+    - git-clone: {}
     - script:
         inputs:
-        - content: go version
-    - with:
-        container: golang
-        services:
-        - redis
-        steps:
-        - script:
-            inputs:
-            - content: go version
-        - script:
-            title: Run tests
-            inputs:
-            - content: go test ./...
+        - content: echo "Hello main bitrise.yml"
+    - script@1:
+        inputs:
+        - content: |-
+            rm -rf $(which bitrise)
+            go install github.com/bitrise-io/bitrise@2.19.0
+    - script@1:
+        inputs:
+        - content: |-
+            bitrise version
+            echo $PATH
+    - bitrise-run:
+        inputs:
+        - workflow_id: print_hello
+        - bitrise_config_path: ./bitrise.yml
     - script:
         inputs:
-        - content: docker ps -a
+        - content: echo "Hello main bitrise.yml"
+
+meta:
+  bitrise.io:
+    stack: osx-xcode-15.1.x
+    machine_type_id: g2-m1.4core
+

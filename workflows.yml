@@ -1,0 +1,28 @@
+workflows:
+  print_hello:
+    steps:
+    - script:
+        inputs:
+        - content: echo "Hello workflows.yml!"
+  test:
+    envs:
+    - REDIS_DSN: redis:6379
+    steps:
+    - script:
+        inputs:
+        - content: go version
+    - with:
+        container: golang
+        services:
+        - redis
+        steps:
+        - script:
+            inputs:
+            - content: go version
+        - script:
+            title: Run tests
+            inputs:
+            - content: go test ./...
+    - script:
+        inputs:
+        - content: docker ps -a
