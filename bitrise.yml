@@ -14,6 +14,7 @@ workflows:
     before_run:
     - print_hello
     steps:
+    - git-clone: {}
     - script:
         inputs:
         - content: echo "Hello main bitrise.yml"
