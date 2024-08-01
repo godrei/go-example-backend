@@ -1,4 +1,9 @@
 workflows:
+  print_hello:
+    steps:
+    - script:
+        inputs:
+        - content: echo "Hello workflows.yml!"
   test:
     envs:
     - REDIS_DSN: redis:6379

@@ -4,3 +4,24 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 include:
 - path: containers.yml
 - path: workflows.yml
+
+trigger_map:
+- type: pull_request
+  workflow: print_hello_main
+
+workflows:
+  print_hello_main:
+    before_run:
+    - print_hello
+    steps:
+    - script:
+        inputs:
+        - content: echo "Hello main bitrise.yml"
+    - script@1:
+        inputs:
+        - content: go install github.com/bitrise-io/bitrise@2.19.0
+    - bitrise-run:
+        inputs:
+        - workflow_id: print_hello
+        - bitrise_config_path: ./bitrise.yml
+
