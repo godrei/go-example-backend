@@ -1,4 +1,4 @@
-# go-example-backend
+# go-example-backend 2
 
 This project demonstrates a Go server, that writes to and reads from a Redis database.
 
