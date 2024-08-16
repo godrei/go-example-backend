@@ -16,12 +16,18 @@ services:
       --health-timeout 5s
       --health-retries 5
 
+step_bundles:
+  setup_repo:
+    steps:
+    - activate-ssh-key@4: {}
+    - git-clone@8: {}
+
 workflows:
   test:
     envs:
     - REDIS_DSN: redis:6379
     steps:
-    - git-clone: { }
+    - bundle::setup_repo: { }
     - script:
         inputs:
         - content: go version
@@ -37,10 +43,6 @@ workflows:
             title: Run tests
             inputs:
             - content: go test ./...
-    - script:
-        inputs:
-        - content: docker ps -a
-
 meta:
   bitrise.io:
     stack: linux-docker-android-22.04
