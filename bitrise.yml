@@ -21,6 +21,7 @@ workflows:
     envs:
     - REDIS_DSN: redis:6379
     steps:
+    - git-clone: { }
     - script:
         inputs:
         - content: go version
@@ -39,3 +40,8 @@ workflows:
     - script:
         inputs:
         - content: docker ps -a
+
+meta:
+  bitrise.io:
+    stack: linux-docker-android-22.04
+    machine_type_id: standard
