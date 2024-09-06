@@ -47,7 +47,7 @@ workflows:
         - script@1:
             title: Build
             inputs:
-            - content: go build -o $BITRISE_DEPLOY_DIR/
+            - content: go build -buildvcs=false -o $BITRISE_DEPLOY_DIR/
     - deploy-to-bitrise-io@2: { }
 
 meta:
